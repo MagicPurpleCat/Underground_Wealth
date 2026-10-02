@@ -52,9 +52,9 @@ QUIC/TCP 7844 к Cloudflare часто блокируется → 530 / tunnel f
 
 ---
 
-## [2026-10-02] Amvera: нет docker-compose
+## [2026-10-02] Amvera: Unknown configuration error
 **Категория:** деплой
 **Что неочевидно:**
-Amvera принимает только классический Dockerfile / amvera.yaml, не compose. npm-toolchain не дружит с pnpm workspaces.
+Строгий `meta.toolchain.name: docker` + числовой `containerPort` иногда даёт «Unknown configuration error».
 **Решение / на что обращать внимание:**
-Прод через корневой `Dockerfile` + `amvera.yaml`. PG и Redis — отдельные managed-проекты. Инструкция: `docs/amvera.md`.
+Формат как в примерах Amvera: `toolchain: docker`, `containerPort: "80"`, `build.skip: false`. Проект должен быть типа Docker, не Node.

@@ -15,7 +15,7 @@
 
 ## Приложение
 
-1. Тип окружения: Docker (в репо уже есть [`amvera.yaml`](../amvera.yaml) + [`Dockerfile`](../Dockerfile)).
+1. Тип окружения: **Docker** (не Node). В репо [`amvera.yaml`](../amvera.yaml) + [`Dockerfile`](../Dockerfile).
 2. Вкладка **Репозиторий** → подключить GitHub `MagicPurpleCat/Underground_Wealth`, ветка `main`, webhook.
 3. **Настройки → Доменные имена** → бесплатный HTTPS-домен Amvera (нужен Max Mini App).
 4. После деплоя URL вида `https://underground-wealth-….amvera.io` → вставить в Max как Mini App URL.

@@ -1,10 +1,10 @@
 meta:
   environment: docker
-  toolchain:
-    name: docker
+  toolchain: docker
 
 build:
   dockerfile: Dockerfile
+  skip: false
 
 run:
-  containerPort: 80
+  containerPort: "80"
