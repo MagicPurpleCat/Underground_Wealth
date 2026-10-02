@@ -13,8 +13,8 @@ Idle-шахта в мессенджере Max (Mini App): добыча руды,
 - **Язык:** TypeScript
 - **Фреймворк:** Vite + React 19 (web), Fastify 5 (api), `@maxhub/max-bot-api` (бот)
 - **База данных:** Postgres 16 + Redis 7
-- **Инфраструктура:** Docker Compose (локально), pnpm workspaces
-- **CI/CD:** —
+- **Инфраструктура:** Docker Compose (локально), pnpm workspaces; **прод — Amvera** (Docker app + managed PG/Redis)
+- **CI/CD:** GitHub → webhook Amvera
 - **Прочее:** Tailwind 4 + shadcn, `@pb/shared` (формулы/баланс), Twemoji CDN
 
 ## Структура проекта
@@ -25,6 +25,9 @@ Idle-шахта в мессенджере Max (Mini App): добыча руды,
 ├── packages/shared/   # типы, формулы, конфиги шахт
 ├── assets/brand/      # логотипы
 ├── assets/game/       # руды и фоны шахт
+├── docker/            # amvera-entrypoint.sh
+├── docs/amvera.md     # деплой Amvera
+├── Dockerfile / amvera.yaml
 ├── docker-compose.yml
 ├── project-passport.md / project-decision.md / gotchas.md / BUGS.md / STYLE.md / todo.md
 └── README.md
@@ -58,15 +61,16 @@ Idle-шахта в мессенджере Max (Mini App): добыча руды,
 | `MAX_BOT_TOKEN` | токен бота Max (только `.env`) | да для бота |
 | `MAX_APP_SECRET` | HMAC initData | для прода |
 | `MAX_MINIAPP_URL` | ссылка Mini App в кнопках бота | да для бота |
-| `WEB_ORIGIN` | CORS | да |
-| `PORT` | API порт (3001) | нет |
+| `WEB_ORIGIN` | CORS / origin Mini App | да |
+| `PORT` | API порт (3001 локально, 80 на Amvera) | нет |
+| `WEB_DIST` | путь к собранному Mini App (прод) | нет |
 
 ## Команды
 - **Запуск:** `docker compose -p pb up -d && pnpm db:migrate && pnpm dev`
 - **Бот:** `pnpm bot` (один процесс; lock `apps/api/.bot.lock`)
 - **Тесты:** —
-- **Сборка:** `pnpm --filter @pb/web build`
-- **Деплой:** нужен публичный HTTPS (Vercel и т.п. или туннель)
+- **Сборка:** `pnpm build`
+- **Деплой:** Amvera — см. `docs/amvera.md` (HTTPS домен → Max Mini App URL)
 
 ## Контакты / ответственные
 Владелец продукта / разработка — локальный workspace.

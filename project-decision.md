@@ -46,6 +46,16 @@ PRD «Подземные богатства» — idle-шахта в Max Mini Ap
 
 ---
 
+## [2026-10-02] ADR-004: Прод на Amvera (один Docker + PG/Redis)
+**Контекст:**
+Нужен стабильный HTTPS для Max Mini App; Amvera не поддерживает docker-compose; фронт ходит на `/api` (same-origin).
+**Решение:**
+Один Docker-сервис (`amvera.yaml` + `Dockerfile`): статика Mini App + Fastify API под `/api` + Max bot в entrypoint. Postgres и Redis — отдельные managed-проекты Amvera. Документация: `docs/amvera.md`.
+**Альтернативы:** раздельные web/api проекты Amvera; Vercel только для web.
+**Последствия:** один HTTPS URL в Max; миграции при старте контейнера; бот без `MAX_BOT_TOKEN` пропускается.
+
+---
+
 ### Шаблон новой записи:
 ```
 ## [YYYY-MM-DD] ADR-XXX: Краткое название

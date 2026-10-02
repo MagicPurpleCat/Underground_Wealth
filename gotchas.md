@@ -49,3 +49,12 @@
 QUIC/TCP 7844 к Cloudflare часто блокируется → 530 / tunnel fail.
 **Решение / на что обращать внимание:**
 Пробовать serveo / localtunnel / localhost.run или деплой; не полагаться только на cloudflared.
+
+---
+
+## [2026-10-02] Amvera: нет docker-compose
+**Категория:** деплой
+**Что неочевидно:**
+Amvera принимает только классический Dockerfile / amvera.yaml, не compose. npm-toolchain не дружит с pnpm workspaces.
+**Решение / на что обращать внимание:**
+Прод через корневой `Dockerfile` + `amvera.yaml`. PG и Redis — отдельные managed-проекты. Инструкция: `docs/amvera.md`.

@@ -13,3 +13,4 @@ coverage
 .bot.lock
 apps/api/certs/download.bin
 tools/*.exe
+.tmp-deploy

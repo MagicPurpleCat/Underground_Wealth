@@ -36,10 +36,15 @@
 **Приоритет:** HIGH
 **Описание:** Бот на @maxhub/max-bot-api + polling; T−5м cron/напоминания ещё частично (команда /boss есть).
 
-## [2026-10-02] TASK-007 [TODO]
+## [2026-10-02] TASK-007 [IN_PROGRESS]
 **Задача:** Стабильный HTTPS деплой Mini App
 **Приоритет:** CRITICAL
-**Описание:** Уйти с туннелей на постоянный хостинг (Vercel/свой домен) для каталога Max.
+**Описание:** Amvera: Dockerfile + amvera.yaml в репо; нужны проекты PG/Redis/app в панели и HTTPS URL в Max. См. docs/amvera.md.
+
+## [2026-10-02] TASK-008 [DONE]
+**Задача:** Конфиги Amvera в репозитории
+**Приоритет:** HIGH
+**Описание:** Dockerfile, amvera.yaml, entrypoint, статика Fastify, docs/amvera.md.
 
 ---
 

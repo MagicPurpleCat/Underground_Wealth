@@ -6,7 +6,9 @@ import { Bot, Keyboard } from '@maxhub/max-bot-api';
 import { buildBossReminder, buildWelcomeMessage } from '../services/bot.js';
 import { maxClientOptions } from './tls.js';
 
-const lockPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.bot.lock');
+const lockPath = process.env.AMVERA
+  ? '/tmp/pb-bot.lock'
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.bot.lock');
 try {
   const fd = openSync(lockPath, 'wx');
   writeFileSync(fd, String(process.pid));

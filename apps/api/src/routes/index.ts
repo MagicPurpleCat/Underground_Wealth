@@ -18,8 +18,6 @@ export async function registerRoutes(app: FastifyInstance) {
     return { welcome: buildWelcomeMessage(), reminder: buildBossReminder() };
   });
 
-  app.get('/health', async () => ({ ok: true }));
-
   app.get('/config', async () => ({
     mines,
     helpers,

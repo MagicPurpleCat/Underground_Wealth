@@ -23,6 +23,11 @@ pnpm dev
 
 Dev-вход в Mini App: кнопка «Войти (dev)» (initData `dev:<id>:<name>`).
 
+## Amvera
+
+Прод: Docker (`amvera.yaml` + `Dockerfile`), Postgres и Redis — отдельные managed-сервисы.
+Инструкция: [docs/amvera.md](docs/amvera.md).
+
 ## Бренд
 
 Ассеты в `assets/brand/`:

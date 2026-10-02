@@ -1,7 +1,11 @@
 import 'dotenv/config';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import websocket from '@fastify/websocket';
+import fastifyStatic from '@fastify/static';
 import { registerRoutes } from './routes/index.js';
 import { tickBossLifecycle, getBossPublic, hitBoss } from './services/boss.js';
 import { verifyToken } from './auth/max.js';
@@ -14,10 +18,14 @@ await app.register(cors, {
 });
 await app.register(websocket);
 
-await registerRoutes(app);
+app.get('/health', async () => ({ ok: true }));
 
-app.register(async (instance) => {
-  instance.get('/ws/boss', { websocket: true }, (socket, req) => {
+await app.register(async (api) => {
+  await registerRoutes(api);
+}, { prefix: '/api' });
+
+await app.register(async (instance) => {
+  instance.get('/ws/boss', { websocket: true }, (socket) => {
     let userId: string | undefined;
     let displayName = 'Шахтёр';
 
@@ -62,6 +70,27 @@ app.register(async (instance) => {
     socket.on('close', () => clearInterval(iv));
   });
 });
+
+const webDist =
+  process.env.WEB_DIST ||
+  path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../web/dist');
+
+if (fs.existsSync(webDist)) {
+  await app.register(fastifyStatic, {
+    root: webDist,
+    prefix: '/',
+    wildcard: false,
+  });
+  app.setNotFoundHandler((req, reply) => {
+    if (req.method === 'GET' && !req.url.startsWith('/api') && !req.url.startsWith('/ws')) {
+      return reply.sendFile('index.html');
+    }
+    return reply.code(404).send({ error: 'NOT_FOUND' });
+  });
+  app.log.info({ webDist }, 'Serving Mini App static');
+} else {
+  app.log.warn({ webDist }, 'WEB_DIST missing — API-only mode');
+}
 
 const port = Number(process.env.PORT ?? 3001);
 
