@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pb
+      POSTGRES_PASSWORD: pb
+      POSTGRES_DB: podzemnye_bogatstva
+    ports:
+      - "5432:5432"
+    volumes:
+      - pb_pg:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - pb_redis:/data
+
+volumes:
+  pb_pg:
+  pb_redis:
