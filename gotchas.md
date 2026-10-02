@@ -57,4 +57,4 @@ QUIC/TCP 7844 к Cloudflare часто блокируется → 530 / tunnel f
 **Что неочевидно:**
 Строгий `meta.toolchain.name: docker` + числовой `containerPort` иногда даёт «Unknown configuration error».
 **Решение / на что обращать внимание:**
-Формат как в примерах Amvera: `toolchain: docker`, `containerPort: "80"`, `build.skip: false`. Проект должен быть типа Docker, не Node.
+`meta.toolchain` должен быть **секцией** (`name: docker`), не строкой `toolchain: docker`. Порт — `"80"`, `build.skip: false`. Проект — Docker.
